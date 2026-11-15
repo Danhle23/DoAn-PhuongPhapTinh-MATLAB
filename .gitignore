@@ -1,0 +1,9 @@
+# MATLAB temporary & autosave files
+*.asv
+*.m~
+*.autosave
+slprj/
+codegen/
+.DS_Store
+__pycache__/
+*.pyc
