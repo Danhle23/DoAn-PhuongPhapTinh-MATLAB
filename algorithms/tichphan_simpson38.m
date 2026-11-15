@@ -1,0 +1,76 @@
+function res = tichphan_simpson38(mode, arg1, arg2, arg3, arg4)
+% TICHPHAN_SIMPSON38 Tinh tich phan xac dinh bang phuong phap Simpson 3/8 mo rong
+% Dieu kien: So khoang chia N phai CHIA HET CHO 3 (N >= 3, mod(N, 3) == 0).
+% Ho tro ca che do 'func' (f, a, b, N) va 'data' (x, y cach deu voi N = length(x)-1 chia het cho 3).
+
+    if strcmpi(mode, 'data')
+        [x, sortIdx] = sort(arg1(:)');
+        y = arg2(:)';
+        y = y(sortIdx);
+        n = numel(x);
+        N = n - 1;
+        if n ~= numel(y) || N < 3
+            error('Simpson 3/8 tren du lieu can it nhat 4 diem (N >= 3 khoang chia)!');
+        end
+        if mod(N, 3) ~= 0
+            error('Simpson 3/8 yeu cau so khoang chia N = length(x)-1 = %d phai CHIA HET CHO 3 (3, 6, 9, 12...)!', N);
+        end
+        dx = diff(x);
+        h = dx(1);
+        if max(abs(dx - h)) > 1e-6 * max(1, abs(h))
+            error('Simpson 3/8 tren du lieu roi rac yeu cau cac moc x phai CACH DEU nhau!');
+        end
+
+        w = 3 * ones(1, n);
+        w(1) = 1;
+        w(end) = 1;
+        w(4:3:end-3) = 2; % Chi so MATLAB 4,7,10... tuong ung y_3, y_6, y_9...
+        I = (3 * h / 8) * sum(w .* y);
+
+        res = struct( ...
+            'method', 'Simpson 3/8 (Du lieu x, y)', ...
+            'mode', 'data', ...
+            'I', I, ...
+            'I_exact', NaN, ...
+            'abs_err', NaN, ...
+            'N', N, ...
+            'h', h, ...
+            'x_nodes', x, ...
+            'y_nodes', y, ...
+            'weights', w * (3 * h / 8), ...
+            'formula', 'I = (3h/8) * [y_0 + 3*(y_1+y_2+y_4+...) + 2*(y_3+y_6+...) + y_N]');
+    else
+        [f, ~] = parse_math_func(arg1);
+        a = arg2;
+        b = arg3;
+        N = round(arg4);
+        if N < 3 || mod(N, 3) ~= 0
+            error('Phuong phap Simpson 3/8 yeu cau so khoang chia N (%d) phai CHIA HET CHO 3 (vi du: 3, 6, 9, 12, 15, 30)!', N);
+        end
+
+        h = (b - a) / N;
+        x_nodes = linspace(a, b, N + 1);
+        y_nodes = f(x_nodes);
+
+        w = 3 * ones(1, N + 1);
+        w(1) = 1;
+        w(end) = 1;
+        w(4:3:end-3) = 2;
+
+        I = (3 * h / 8) * sum(w .* y_nodes);
+        I_exact = integral(f, a, b, 'RelTol', 1e-12, 'AbsTol', 1e-14);
+
+        res = struct( ...
+            'method', 'Simpson 3/8 (Ham so)', ...
+            'mode', 'func', ...
+            'I', I, ...
+            'I_exact', I_exact, ...
+            'abs_err', abs(I - I_exact), ...
+            'N', N, ...
+            'h', h, ...
+            'x_nodes', x_nodes, ...
+            'y_nodes', y_nodes, ...
+            'weights', w * (3 * h / 8), ...
+            'formula', 'I = (3h/8) * [y_0 + 3*sum(i khong chia het 3) + 2*sum(i chia het 3) + y_N]');
+    end
+end
