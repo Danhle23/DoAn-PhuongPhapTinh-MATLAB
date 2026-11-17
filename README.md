@@ -1,6 +1,20 @@
 # Đồ Án Phương Pháp Tính & MATLAB App Designer (Phiên Bản Nâng Cấp Tối Đa 10/10)
 
+[![MATLAB](https://img.shields.io/badge/MATLAB-R2020b%2B%20%7C%20R2026a-0076A8?logo=mathworks&logoColor=white)](https://github.com/Danhle23/DoAn-PhuongPhapTinh-MATLAB)
+[![Tests](https://img.shields.io/badge/Unit%20Tests-25%2F25%20PASSED-10B981)](./tests/run_all_25_tests_and_export.m)
+[![Architecture](https://img.shields.io/badge/Architecture-Modular%20OOP%20AppBase-6366F1)](./AppPhuongPhapTinh.m)
+
 Hệ thống phần mềm giải quyết toàn diện các bài toán **Phương Pháp Tính (Numerical Methods)** kết hợp trực quan hóa đồ thị động trên nền tảng **MATLAB App Designer (`matlab.apps.AppBase`)**, đáp ứng trọn vẹn **25/25 tiêu chí ứng dụng (70%)** và **7/7 tiêu chí báo cáo học thuật & GitHub (30%)**.
+
+## Giao diện thực tế (MATLAB R2026a)
+
+| Tab 1: Tìm Nghiệm & Hội Tụ Log | Tab 3: Hồi Quy & Tự Động Xếp Hạng $R^2$ |
+| :---: | :---: |
+| ![Tab 1 Nghiệm](./screenshots/tab1_nghiem.png) | ![Tab 3 Hồi quy](./screenshots/tab3_hoiquy.png) |
+
+| Tab 4: Đạo Hàm $O(h), O(h^2)$ & Tiếp Tuyến | Tab 5: Tích Phân Simpson 1/3, 3/8 & Diện Tích |
+| :---: | :---: |
+| ![Tab 4 Đạo hàm](./screenshots/tab4_daoham.png) | ![Tab 5 Tích phân](./screenshots/tab5_tichphan.png) |
 
 ## Cấu trúc thư mục dự án
 
