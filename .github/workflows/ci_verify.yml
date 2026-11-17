@@ -1,0 +1,22 @@
+name: Verify Numerical Solvers (CI)
+
+on:
+  push:
+    branches: [ "main", "feat/**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-algorithms:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install GNU Octave for headless solver verification
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq octave
+
+      - name: Run 16-module numerical verification suite
+        run: octave --no-gui --quiet tests/ci_octave_verify.m

@@ -97,19 +97,19 @@ function run_all_25_tests_and_export()
     drawnow;
     pause(0.8);
 
-    tabs = {app.TabNghiem, app.TabNoiSuy, app.TabHoiQuy, app.TabDaoHam, app.TabTichPhan, app.TabGioiThieu};
-    names = {'tab1_nghiem.png', 'tab2_noisuy.png', 'tab3_hoiquy.png', 'tab4_daoham.png', 'tab5_tichphan.png', 'tab6_gioithieu.png'};
+    tabs = {app.TabNghiem, app.TabNoiSuy, app.TabHoiQuy, app.TabDaoHam, app.TabTichPhan, app.TabGioiThieu, app.TabCamNang};
+    names = {'tab1_nghiem.png', 'tab2_noisuy.png', 'tab3_hoiquy.png', 'tab4_daoham.png', 'tab5_tichphan.png', 'tab6_gioithieu.png', 'tab7_camnang.png'};
 
     for idx = 1:numel(tabs)
         app.TabGroup.SelectedTab = tabs{idx};
         drawnow;
-        pause(0.5);
+        pause(0.4);
         outPath = fullfile(shotDir, names{idx});
         exportapp(app.UIFigure, outPath);
         fprintf('[PASS TC%02d] Da luu anh giao dien: %s\n', idx, outPath);
     end
 
-    % --- DONG GOI FILE .MLAPP CHINH GOC BANG MLAPPSERIALIZER ---
+    % --- DONG GOI FILE .MLAPP CHINH GOC BANG MLAPPSERIALIZER (ZERO WARNINGS) ---
     mlappPath = fullfile(projDir, 'AppPhuongPhapTinh_Designer.mlapp');
     mSrcPath = fullfile(projDir, 'AppPhuongPhapTinh.m');
     try
@@ -119,7 +119,17 @@ function run_all_25_tests_and_export()
         codeTxt = strrep(codeTxt, 'classdef AppPhuongPhapTinh', 'classdef AppPhuongPhapTinh_Designer');
         codeTxt = strrep(codeTxt, 'function app = AppPhuongPhapTinh', 'function app = AppPhuongPhapTinh_Designer');
 
-        % Gan DesignTimeProperties.CodeName cho cac component chinh de App Designer nhan dien
+        % Go cac callback runtime chua tham chieu den app truoc khi luu uifigure vao .mlapp
+        allComps = findall(app.UIFigure);
+        cbProps = {'ButtonPushedFcn', 'ValueChangedFcn', 'SelectionChangedFcn', 'CellEditCallback', 'CloseRequestFcn'};
+        for cIdx = 1:numel(allComps)
+            for cbIdx = 1:numel(cbProps)
+                if isprop(allComps(cIdx), cbProps{cbIdx})
+                    allComps(cIdx).(cbProps{cbIdx}) = '';
+                end
+            end
+        end
+
         props = properties(app);
         for pIdx = 1:numel(props)
             pName = props{pIdx};
@@ -140,7 +150,7 @@ function run_all_25_tests_and_export()
         ser.MatlabCodeText = codeTxt;
         ser.OverwriteTargetFile = true;
         ser.Metadata.Name = 'AppPhuongPhapTinh_Designer';
-        ser.Metadata.Summary = 'Studio Phuong Phap Tinh & MATLAB (6 Tabs - 25/25 Tieu chi)';
+        ser.Metadata.Summary = 'Studio Phuong Phap Tinh & Ky Thuat Dien MATLAB v2.0 (7 Tabs)';
         ser.Metadata.Description = 'Ung dung giai bai toan Phuong phap tinh tren MATLAB App Designer.';
         ser.Metadata.MinimumSupportedMATLABRelease = 'R2020b';
         ser.ScreenshotPath = fullfile(shotDir, 'tab1_nghiem.png');

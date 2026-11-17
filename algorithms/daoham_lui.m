@@ -3,7 +3,7 @@ function res = daoham_lui(mode, arg1, arg2, x0, orderStr)
 % Ho tro ca O(h) (2 diem) va O(h^2) (3 diem) cho ham so va du lieu (x, y)
 
     if nargin < 5 || isempty(orderStr), orderStr = 'O(h)'; end
-    isOh2 = contains(orderStr, '2');
+    isOh2 = ~isempty(strfind(char(orderStr), '2'));
 
     if strcmpi(mode, 'func')
         [f, ~] = parse_math_func(arg1);

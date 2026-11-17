@@ -21,7 +21,7 @@ function [fh, exprClean] = parse_math_func(exprStr)
 
     % Neu nguoi dung nhap phuong trinh dang "VT = VP", chuyen thanh "(VT) - (VP)"
     eqIdx = strfind(s, '=');
-    if numel(eqIdx) == 1 && ~contains(s, {'<=', '>=', '==', '~='})
+    if numel(eqIdx) == 1 && isempty(strfind(s, '<=')) && isempty(strfind(s, '>=')) && isempty(strfind(s, '==')) && isempty(strfind(s, '~='))
         lhs = strtrim(s(1:eqIdx-1));
         rhs = strtrim(s(eqIdx+1:end));
         if strcmp(rhs, '0')

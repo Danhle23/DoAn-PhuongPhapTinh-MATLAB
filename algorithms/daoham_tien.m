@@ -5,7 +5,7 @@ function res = daoham_tien(mode, arg1, arg2, x0, orderStr)
 %   - mode = 'data': arg1 = vector x, arg2 = vector y
 
     if nargin < 5 || isempty(orderStr), orderStr = 'O(h)'; end
-    isOh2 = contains(orderStr, '2');
+    isOh2 = ~isempty(strfind(char(orderStr), '2'));
 
     if strcmpi(mode, 'func')
         [f, ~] = parse_math_func(arg1);

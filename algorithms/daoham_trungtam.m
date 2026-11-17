@@ -4,7 +4,7 @@ function res = daoham_trungtam(mode, arg1, arg2, x0, orderStr)
 % Neu chon bac cao O(h^4) (Richardson 4 diem): [-f(x0+2h) + 8f(x0+h) - 8f(x0-h) + f(x0-2h)] / (12h)
 
     if nargin < 5 || isempty(orderStr), orderStr = 'O(h^2)'; end
-    isOh4 = contains(orderStr, '4');
+    isOh4 = ~isempty(strfind(char(orderStr), '4'));
 
     if strcmpi(mode, 'func')
         [f, ~] = parse_math_func(arg1);
