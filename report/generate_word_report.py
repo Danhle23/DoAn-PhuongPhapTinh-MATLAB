@@ -482,8 +482,8 @@ def build_report(proj_dir):
             " ├── feat/integration         # Thành viên 5: tichphan_hinhthang.m, tichphan_simpson13.m, tichphan_simpson38.m",
             " └── test/qa-and-docs         # Thành viên 6: run_all_25_tests_and_export.m, báo cáo & tài liệu README",
             "",
-            "# Liên kết kho mã nguồn GitHub của nhóm (điền URL repo khi push):",
-            "Repository URL: https://github.com/<username-nhom-truong>/DoAn-PhuongPhapTinh-MATLAB",
+            "# Liên kết kho mã nguồn GitHub chính thức của nhóm:",
+            "Repository URL: https://github.com/Danhle23/DoAn-PhuongPhapTinh-MATLAB",
         ],
     )
 
